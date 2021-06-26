@@ -8,7 +8,8 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-        return this.http.get<User[]>(`${config.apiUrl}/users`);
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        return this.http.get<User[]>(`${config.apiUrl}/users/audit/${currentUser['_id']}`);
     }
 
     register(user: User) {
