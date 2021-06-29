@@ -10,7 +10,12 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
-
+    userTypeList = [
+        {id: 1, name: 'Auditor'},
+        {id:2, name: 'User'}
+    ];
+    userType = "Auditor"
+;
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
@@ -28,8 +33,9 @@ export class RegisterComponent implements OnInit {
         this.registerForm = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
+            userType: ['', Validators.required],
             username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            password: ['', [Validators.required, Validators.minLength(6)]],
         });
     }
 
@@ -59,5 +65,9 @@ export class RegisterComponent implements OnInit {
                     this.alertService.error(error);
                     this.loading = false;
                 });
+    }
+
+    change(){
+        this.registerForm.value.userType = this.registerForm.value.userType.toLowerCase();
     }
 }
